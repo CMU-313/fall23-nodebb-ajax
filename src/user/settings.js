@@ -20,6 +20,12 @@ module.exports = function (User) {
         return await onSettingsLoaded(uid, settings);
     };
 
+    User.canCreateTag = async function (uid) {
+        const userData = await db.getObject(`user:${uid}`);
+        console.log(`account type = ${userData.accounttype}`);
+        return userData.accounttype === 'instructor';
+    };
+
     User.getMultipleUserSettings = async function (uids) {
         if (!Array.isArray(uids) || !uids.length) {
             return [];

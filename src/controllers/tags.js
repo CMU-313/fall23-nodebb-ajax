@@ -68,14 +68,17 @@ tagsController.getTag = async function (req, res) {
 
 tagsController.getTags = async function (req, res) {
     const cids = await categories.getCidsByPrivilege('categories:cid', req.uid, 'topics:read');
-    const [canSearch, tags] = await Promise.all([
+    const [canSearch, tags, displayCreate] = await Promise.all([
         privileges.global.can('search:tags', req.uid),
         topics.getCategoryTagsData(cids, 0, 99),
+        user.canCreateTag(req.uid),
     ]);
+    
 
     res.render('tags', {
         tags: tags.filter(Boolean),
         displayTagSearch: canSearch,
+        displayCreateButton: displayCreate,
         nextStart: 100,
         breadcrumbs: helpers.buildBreadcrumbs([{ text: '[[tags:tags]]' }]),
         title: '[[pages:tags]]',
