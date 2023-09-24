@@ -394,6 +394,10 @@ function checkVisibleChildren(c, cidToAllowed, cidToWatchState, states) {
 helpers.getHomePageRoutes = async function (uid) {
     const routes = [
         {
+            route: 'tags',
+            name: 'Tags',
+        },
+        {
             route: 'categories',
             name: 'Categories',
         },
