@@ -178,7 +178,7 @@ privsAdmin.can = async function (privilege, uid) {
     if (privilege === 'admin:tags' && user.canCreateTag(uid)) {
         return true;
     }
-    
+
     const [isUserAllowedTo, isAdministrator] = await Promise.all([
         helpers.isAllowedTo(privilege, uid, [0]),
         user.isAdministrator(uid),

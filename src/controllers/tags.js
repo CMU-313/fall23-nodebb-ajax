@@ -73,7 +73,7 @@ tagsController.getTags = async function (req, res) {
         topics.getCategoryTagsData(cids, 0, 99),
         user.canCreateTag(req.uid),
     ]);
-    
+
 
     res.render('tags', {
         tags: tags.filter(Boolean),

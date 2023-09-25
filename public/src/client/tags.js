@@ -23,7 +23,7 @@ define('forum/tags', ['forum/infinitescroll', 'alerts'], function (infinitescrol
 
         infinitescroll.init(Tags.loadMoreTags);
     };
-    
+
     function handleCreate() {
         const createModal = $('#create-modal');
         const createTagName = $('#create-tag-name');
