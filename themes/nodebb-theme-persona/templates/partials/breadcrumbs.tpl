@@ -5,7 +5,7 @@
         <meta itemprop="position" content="{@index}" />
         {{{ if ./url }}}<a href="{breadcrumbs.url}" itemprop="item">{{{ end }}}
             <span itemprop="name">
-                {breadcrumbs.text}
+                Courses
                 <!-- IF @last -->
                 <!-- IF !feeds:disableRSS -->
                 <!-- IF rssFeedUrl --><a target="_blank" href="{rssFeedUrl}" itemprop="item"><i class="fa fa-rss-square"></i></a><!-- ENDIF rssFeedUrl --><!-- ENDIF !feeds:disableRSS -->
