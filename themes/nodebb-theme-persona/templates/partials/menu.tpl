@@ -242,7 +242,7 @@
                             <i class="fa fa-fw {navigation.iconClass}" data-content="{navigation.content}"></i>
                             {{{ end }}}
                             {{{ if navigation.text }}}
-                            <span class="{navigation.textClass}">Courses</span>
+                            <span class="{navigation.textClass}">{navigation.text}</span>
                             {{{ end }}}
                             {{{ if navigation.dropdown}}}
                             <i class="fa fa-caret-down"></i>
