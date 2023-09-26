@@ -23,18 +23,20 @@ define('forum/tags', ['forum/infinitescroll', 'alerts'], function (infinitescrol
 
         infinitescroll.init(Tags.loadMoreTags);
     };
-    
+    // handleCreate : void -> void
     function handleCreate() {
         const createModal = $('#create-modal');
         const createTagName = $('#create-tag-name');
         const createModalGo = $('#create-modal-go');
 
+        // map enter key press to create button click
         createModal.on('keypress', function (e) {
             if (e.keyCode === 13) {
                 createModalGo.click();
             }
         });
 
+        // show modal when create course button is clicked
         $('#create').on('click', function () {
             createModal.modal('show');
             setTimeout(function () {
@@ -42,6 +44,7 @@ define('forum/tags', ['forum/infinitescroll', 'alerts'], function (infinitescrol
             }, 250);
         });
 
+        // logic for create tag button inside modal
         createModalGo.on('click', function () {
             socket.emit('admin.tags.create', {
                 tag: createTagName.val(),
