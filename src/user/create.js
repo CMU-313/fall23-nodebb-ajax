@@ -55,6 +55,14 @@ module.exports = function (User) {
             lastonline: timestamp,
             status: 'online',
         };
+
+        // Append "-student" or "-admin" based on the account type
+        if (userData.accounttype === 'admin') {
+            userData.username += '-admin';
+        } else {
+            userData.username += '-student';
+        }
+
         ['picture', 'fullname', 'location', 'birthday'].forEach((field) => {
             if (data[field]) {
                 userData[field] = data[field];
