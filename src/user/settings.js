@@ -23,7 +23,7 @@ module.exports = function (User) {
 
     // canCreateTag : string -> boolean
     User.canCreateTag = async function (uid) {
-        assert(typeof uid === 'string');
+        assert(typeof uid === 'number');
         const userData = await db.getObject(`user:${uid}`);
         console.log(`account type = ${userData.accounttype}`);
         assert(typeof (userData.accounttype === 'instructor') === 'boolean');
