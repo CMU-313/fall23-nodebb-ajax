@@ -6,8 +6,15 @@ const plugins = require('../plugins');
 const meta = require('../meta');
 const user = require('../user');
 
+
+
 function adminHomePageRoute() {
-    return ((meta.config.homePageRoute === 'custom' ? meta.config.homePageCustom : meta.config.homePageRoute) || 'tags').replace(/^\//, '');
+    // assert return type string
+    const output = ((meta.config.homePageRoute === 'custom' ? meta.config.homePageCustom : meta.config.homePageRoute) || 'tags').replace(/^\//, '');
+    if (typeof output !== 'string') {
+        throw new TypeError('Parameter "data" must be an string.');
+    }
+    return output;
 }
 
 async function getUserHomeRoute(uid) {
