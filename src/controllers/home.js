@@ -5,15 +5,14 @@ const url = require('url');
 const plugins = require('../plugins');
 const meta = require('../meta');
 const user = require('../user');
+const { assert } = require('console');
 
 
-
+// return type should be string
 function adminHomePageRoute() {
     // assert return type string
     const output = ((meta.config.homePageRoute === 'custom' ? meta.config.homePageCustom : meta.config.homePageRoute) || 'tags').replace(/^\//, '');
-    if (typeof output !== 'string') {
-        throw new TypeError('Parameter "data" must be an string.');
-    }
+    assert(typeof output == "string")
     return output;
 }
 

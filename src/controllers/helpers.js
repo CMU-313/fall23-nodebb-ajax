@@ -19,6 +19,7 @@ const helpers = module.exports;
 
 const relative_path = nconf.get('relative_path');
 const url = nconf.get('url');
+const { assert } = require('console');
 
 helpers.noScriptErrors = async function (req, res, error, httpStatus) {
     if (req.body.noscript !== 'true') {
@@ -391,7 +392,10 @@ function checkVisibleChildren(c, cidToAllowed, cidToWatchState, states) {
     ));
 }
 
+// parameter uid is of type number
+// return type is of type array (object)
 helpers.getHomePageRoutes = async function (uid) {
+    assert(typeof uid == "number")
     const routes = [
         {
             route: 'tags',
@@ -426,6 +430,7 @@ helpers.getHomePageRoutes = async function (uid) {
         uid: uid,
         routes: routes,
     });
+    assert(typeof data.routes == "object")
     return data.routes;
 };
 
