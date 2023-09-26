@@ -177,7 +177,7 @@ privsAdmin.get = async function (uid) {
 // can : (string, string) -> boolean
 privsAdmin.can = async function (privilege, uid) {
     assert(typeof privilege === 'string');
-    assert(typeof uid === 'string');
+    assert(typeof uid === 'number');
     // allow instructors to create tags
     if (privilege === 'admin:tags' && user.canCreateTag(uid)) {
         assert(typeof true === 'boolean');
