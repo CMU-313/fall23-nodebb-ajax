@@ -6,6 +6,7 @@ define('forum/tags', ['forum/infinitescroll', 'alerts'], function (infinitescrol
 
     Tags.init = function () {
         app.enterRoom('tags');
+        handleCreate();
         $('#tag-search').focus();
         $('#tag-search').on('input propertychange', utils.debounce(function () {
             if (!$('#tag-search').val().length) {
@@ -22,6 +23,44 @@ define('forum/tags', ['forum/infinitescroll', 'alerts'], function (infinitescrol
 
         infinitescroll.init(Tags.loadMoreTags);
     };
+    // handleCreate : void -> void
+    function handleCreate() {
+        const createModal = $('#create-modal');
+        const createTagName = $('#create-tag-name');
+        const createModalGo = $('#create-modal-go');
+
+        // map enter key press to create button click
+        createModal.on('keypress', function (e) {
+            if (e.keyCode === 13) {
+                createModalGo.click();
+            }
+        });
+
+        // show modal when create course button is clicked
+        $('#create').on('click', function () {
+            createModal.modal('show');
+            setTimeout(function () {
+                createTagName.focus();
+            }, 250);
+        });
+
+        // logic for create tag button inside modal
+        createModalGo.on('click', function () {
+            socket.emit('admin.tags.create', {
+                tag: createTagName.val(),
+            }, function (err) {
+                if (err) {
+                    return alerts.error(err);
+                }
+
+                createTagName.val('');
+                createModal.on('hidden.bs.modal', function () {
+                    ajaxify.refresh();
+                });
+                createModal.modal('hide');
+            });
+        });
+    }
 
     Tags.loadMoreTags = function (direction) {
         if (direction < 0 || !$('.tag-list').length || $('#tag-search').val()) {

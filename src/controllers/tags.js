@@ -2,6 +2,7 @@
 
 const validator = require('validator');
 const nconf = require('nconf');
+const assert = require('assert');
 
 const meta = require('../meta');
 const user = require('../user');
@@ -65,17 +66,22 @@ tagsController.getTag = async function (req, res) {
     templateData.rssFeedUrl = `${nconf.get('relative_path')}/tags/${tag}.rss`;
     res.render('tag', templateData);
 };
-
+// getTags : (object, object) -> Promise<void>
 tagsController.getTags = async function (req, res) {
+    assert(typeof req === 'object');
+    assert(typeof res === 'object');
     const cids = await categories.getCidsByPrivilege('categories:cid', req.uid, 'topics:read');
-    const [canSearch, tags] = await Promise.all([
+    const [canSearch, tags, displayCreate] = await Promise.all([
         privileges.global.can('search:tags', req.uid),
         topics.getCategoryTagsData(cids, 0, 99),
+        user.canCreateTag(req.uid),
     ]);
+
 
     res.render('tags', {
         tags: tags.filter(Boolean),
         displayTagSearch: canSearch,
+        displayCreateButton: displayCreate,
         nextStart: 100,
         breadcrumbs: helpers.buildBreadcrumbs([{ text: '[[tags:tags]]' }]),
         title: '[[pages:tags]]',

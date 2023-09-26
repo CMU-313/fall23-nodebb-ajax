@@ -2,6 +2,7 @@
 'use strict';
 
 const _ = require('lodash');
+const assert = require('assert');
 
 const user = require('../user');
 const groups = require('../groups');
@@ -173,11 +174,21 @@ privsAdmin.get = async function (uid) {
     return await plugins.hooks.fire('filter:privileges.admin.get', privData);
 };
 
+// can : (string, string) -> boolean
 privsAdmin.can = async function (privilege, uid) {
+    assert(typeof privilege === 'string');
+    assert(typeof uid === 'number');
+    // allow instructors to create tags
+    if (privilege === 'admin:tags' && user.canCreateTag(uid)) {
+        assert(typeof true === 'boolean');
+        return true;
+    }
+
     const [isUserAllowedTo, isAdministrator] = await Promise.all([
         helpers.isAllowedTo(privilege, uid, [0]),
         user.isAdministrator(uid),
     ]);
+    assert(typeof (isAdministrator || isUserAllowedTo[0]) === 'boolean');
     return isAdministrator || isUserAllowedTo[0];
 };
 

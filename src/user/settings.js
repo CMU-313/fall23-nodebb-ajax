@@ -2,6 +2,7 @@
 'use strict';
 
 const validator = require('validator');
+const assert = require('assert');
 
 const meta = require('../meta');
 const db = require('../database');
@@ -18,6 +19,15 @@ module.exports = function (User) {
         settings = settings || {};
         settings.uid = uid;
         return await onSettingsLoaded(uid, settings);
+    };
+
+    // canCreateTag : string -> boolean
+    User.canCreateTag = async function (uid) {
+        assert(typeof uid === 'string');
+        const userData = await db.getObject(`user:${uid}`);
+        console.log(`account type = ${userData.accounttype}`);
+        assert(typeof (userData.accounttype === 'instructor') === 'boolean');
+        return userData.accounttype === 'instructor';
     };
 
     User.getMultipleUserSettings = async function (uids) {
