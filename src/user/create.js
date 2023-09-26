@@ -43,7 +43,18 @@ module.exports = function (User) {
         }
     }
 
+
+    /**
+     * Create a new user with custom username generation based on the account type (student or admin).
+     * @param {Object} data - User data object.
+     * @returns {Promise<number>} The user's UID.
+    */
     async function create(data) {
+        // Assert function parameter types
+        if (typeof data !== 'object') {
+            throw new TypeError('Parameter "data" must be an object.');
+        }
+
         const timestamp = data.timestamp || Date.now();
 
         let userData = {
@@ -57,10 +68,10 @@ module.exports = function (User) {
         };
 
         // Append "-student" or "-admin" based on the account type
-        if (userData.accounttype === 'admin') {
-            userData.username += '-admin';
-        } else {
+        if (userData.accounttype === 'student') {
             userData.username += '-student';
+        } else {
+            userData.username += '-instructor';
         }
 
         ['picture', 'fullname', 'location', 'birthday'].forEach((field) => {
@@ -131,6 +142,12 @@ module.exports = function (User) {
             await User.notifications.sendNameChangeNotification(userData.uid, userData.username);
         }
         plugins.hooks.fire('action:user.create', { user: userData, data: data });
+
+        // Assert function return type
+        if (typeof userData.uid !== 'number') {
+            throw new TypeError('Function must return a number (UID).');
+        }
+
         return userData.uid;
     }
 
