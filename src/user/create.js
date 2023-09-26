@@ -20,7 +20,6 @@ module.exports = function (User) {
         }
         if (data['account-type'] !== undefined) {
             data.accounttype = data['account-type'].trim();
-            data.username = `${data.username} (${data.accounttype})`;
         }
 
         await User.isDataValid(data);
