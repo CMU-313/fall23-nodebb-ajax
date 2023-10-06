@@ -36,7 +36,7 @@ module.exports = function (User) {
 
         await validateData(uid, data);
 
-        const oldData = await User.getUserFields(updateUid, fields);
+        const oldData = await User.getUserFields(updateUid, fields.concat('accounttype'));
         const updateData = {};
         await Promise.all(fields.map(async (field) => {
             if (!(data[field] !== undefined && typeof data[field] === 'string')) {
@@ -48,6 +48,12 @@ module.exports = function (User) {
             if (field === 'email') {
                 return await updateEmail(updateUid, data.email);
             } else if (field === 'username') {
+                // Append "-student" or "-instructor" based on account type
+                if (oldData.accounttype === 'student') {
+                    data.username += '-student';
+                } else if (oldData.accounttype === 'instructor') {
+                    data.username += '-instructor';
+                }
                 return await updateUsername(updateUid, data.username);
             } else if (field === 'fullname') {
                 return await updateFullname(updateUid, data.fullname);
