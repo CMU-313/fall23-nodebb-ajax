@@ -46,6 +46,7 @@ tagsController.getTag = async function (req, res) {
     templateData.allCategoriesUrl = `tags/${tag}${helpers.buildQueryString(req.query, 'cid', '')}`;
     templateData.selectedCategory = categoryData.selectedCategory;
     templateData.selectedCids = categoryData.selectedCids;
+    templateData.displayAddStudents = await user.canCreateTag(req.uid);
     topics.calculateTopicIndices(templateData.topics, start);
     res.locals.metaTags = [
         {

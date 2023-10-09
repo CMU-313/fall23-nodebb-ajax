@@ -9,6 +9,33 @@
         <div class="pull-left">
             <!-- IF loggedIn -->
             <!-- IMPORT partials/buttons/newTopic.tpl -->
+            <!-- IF displayAddStudents -->
+            <div class="add-student">
+                <button class="btn btn-primary btn-block" id="add-student">Add Student</button>
+                <div class="modal fade" id="add-student-modal">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                                <h4 class="modal-title">Add Student</h4>
+                            </div>
+                            <div class="modal-body">
+                                <form>
+                                    <div class="form-group">
+                                        <label for="add-student-names">Student Usernames</label>
+                                        <input type="text" class="form-control" id="add-student-names" placeholder="Student Usernames" />
+                                    </div>
+                                </form>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-primary" id="add-students-go">Add Students</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- ENDIF displayAddStudents -->
+
             <!-- ELSE -->
             <a component="category/post/guest" href="{config.relative_path}/login" class="btn btn-primary">[[category:guest-login-post]]</a>
             <!-- ENDIF loggedIn -->
