@@ -48,6 +48,7 @@ define('forum/tags', ['forum/infinitescroll', 'alerts'], function (infinitescrol
         createModalGo.on('click', function () {
             socket.emit('admin.tags.create', {
                 tag: createTagName.val(),
+                uid: app.user.uid,
             }, function (err) {
                 if (err) {
                     return alerts.error(err);
