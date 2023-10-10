@@ -13,9 +13,9 @@ Tags.create = async function (socket, data) {
     await topics.createEmptyTag(data.tag);
 
     await db.setAdd(`uid:${data.uid}:courses`, data.tag);
-    data.students.forEach(async function(username) {
+    data.students.forEach(async (username) => {
         const uid = await user.getUidByUsername(username);
-        await db.setAdd(`user:${uid}:courses`, data.tag);
+        await db.setAdd(`uid:${uid}:courses`, data.tag);
     });
 };
 

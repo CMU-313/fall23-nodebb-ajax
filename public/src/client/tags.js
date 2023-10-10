@@ -28,7 +28,7 @@ define('forum/tags', ['forum/infinitescroll', 'alerts'], function (infinitescrol
         const createModal = $('#create-modal');
         const createTagName = $('#create-tag-name');
         const createModalGo = $('#create-modal-go');
-        const createTagStudents = $('#create-tag-students')
+        const createTagStudents = $('#create-tag-students');
 
         // map enter key press to create button click
         createModal.on('keypress', function (e) {
