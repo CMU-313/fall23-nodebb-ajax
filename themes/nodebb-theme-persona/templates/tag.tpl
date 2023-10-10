@@ -5,32 +5,6 @@
     {{{end}}}
 </div>
 <div class="tag">
-    <!-- IF displayAddStudents -->
-    <div class="add-students">
-        <button class="btn btn-primary btn-block" id="add">Add Students</button>
-        <div class="modal fade" id="add-students-modal">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                        <h4 class="modal-title">Add Students</h4>
-                    </div>
-                    <div class="modal-body">
-                        <form>
-                            <div class="form-group">
-                                <label for="add-student-names">Student Usernames</label>
-                                <input type="text" class="form-control" id="add-student-names" placeholder="Student Usernames" />
-                            </div>
-                        </form>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-primary" id="add-student-modal-go">Add Students</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!-- ENDIF displayAddStudents -->
     <div class="topic-list-header btn-toolbar">
         <div class="pull-left">
             <!-- IF loggedIn -->
