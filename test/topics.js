@@ -2293,7 +2293,7 @@ describe('Topic\'s', () => {
                 assert(teasers[1]);
                 assert(teasers[0].tid, topic1.topicData.tid);
                 assert(teasers[0].content, 'content 1');
-                assert(teasers[0].user.username, 'admin');
+                assert(teasers[0].user.username, 'admin-student');
                 done();
             });
         });
@@ -2306,7 +2306,7 @@ describe('Topic\'s', () => {
                 assert(teasers[1]);
                 assert(teasers[1].tid, topic2.topicData.tid);
                 assert(teasers[1].content, 'content 2');
-                assert(teasers[1].user.username, 'admin');
+                assert(teasers[1].user.username, 'admin-student');
                 done();
             });
         });

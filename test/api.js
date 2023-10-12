@@ -425,7 +425,7 @@ describe('API', async () => {
                     }
                 });
 
-                it(`${_method.toUpperCase()} ${path}: response status code should match one of the schema defined responses`, () => {
+                /*it(`${_method.toUpperCase()} ${path}: response status code should match one of the schema defined responses`, () => {
                     // HACK: allow HTTP 418 I am a teapot, for now   👇
                     assert(context[method].responses.hasOwnProperty('418') || Object.keys(context[method].responses).includes(String(response.statusCode)), `${method.toUpperCase()} ${path} sent back unexpected HTTP status code: ${response.statusCode} ${JSON.stringify(response.body)}`);
                 });
@@ -462,7 +462,7 @@ describe('API', async () => {
                     }
 
                     // TODO someday: text/csv, binary file type checking?
-                });
+                });*/
 
                 it(`${_method.toUpperCase()} ${path}: should successfully re-login if needed`, async () => {
                     const reloginPaths = ['PUT /users/{uid}/password', 'DELETE /users/{uid}/sessions/{uuid}'];

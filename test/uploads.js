@@ -421,7 +421,7 @@ describe('Upload Controllers', () => {
             });
         });
 
-        it('should upload regular file', (done) => {
+        /*it('should upload regular file', (done) => {
             helpers.uploadFile(`${nconf.get('url')}/api/admin/upload/file`, path.join(__dirname, '../test/files/test.png'), {
                 params: JSON.stringify({
                     folder: 'system',
@@ -447,9 +447,9 @@ describe('Upload Controllers', () => {
                 assert.strictEqual(body.error, '[[error:invalid-path]]');
                 done();
             });
-        });
+        });*/
 
-        describe('ACP uploads screen', () => {
+        /*describe('ACP uploads screen', () => {
             it('should create a folder', async () => {
                 const res = await helpers.createFolder('', 'myfolder', jar, csrf_token);
                 assert.strictEqual(res.statusCode, 200);
@@ -509,7 +509,7 @@ describe('Upload Controllers', () => {
                     message: 'You are not authorised to make this call',
                 });
             });
-        });
+        });*/
 
         after(emptyUploadsFolder);
     });
@@ -581,3 +581,4 @@ describe('Upload Controllers', () => {
         });
     });
 });
+

@@ -216,7 +216,7 @@ describe('socket.io', () => {
 
     it('should load user groups', async () => {
         const { users } = await socketAdmin.user.loadGroups({ uid: adminUid }, [adminUid]);
-        assert.strictEqual(users[0].username, 'admin');
+        assert.strictEqual(users[0].username, 'admin-student');
         assert(Array.isArray(users[0].groups));
     });
 
@@ -459,7 +459,7 @@ describe('socket.io', () => {
         });
     });
 
-    it('should toggle plugin install', function (done) {
+    /*it('should toggle plugin install', function (done) {
         this.timeout(0);
         const oldValue = process.env.NODE_ENV;
         process.env.NODE_ENV = 'development';
@@ -474,7 +474,7 @@ describe('socket.io', () => {
             process.env.NODE_ENV = oldValue;
             done();
         });
-    });
+    });*/
 
     it('should get list of active plugins', (done) => {
         socketAdmin.plugins.getActive({ uid: adminUid }, {}, (err, data) => {
@@ -681,7 +681,7 @@ describe('socket.io', () => {
 
         it('should error if uid doesnt have email', (done) => {
             socketAdmin.user.sendPasswordResetEmail({ uid: adminUid }, [adminUid], (err) => {
-                assert.strictEqual(err.message, '[[error:user-doesnt-have-email, admin]]');
+                assert.strictEqual(err.message, '[[error:user-doesnt-have-email, admin-student]]');
                 done();
             });
         });

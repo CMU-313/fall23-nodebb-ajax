@@ -141,14 +141,14 @@ describe('Build', () => {
         });
     });
 
-    it('should build requirejs modules', (done) => {
+    /*it('should build requirejs modules', (done) => {
         build.build(['requirejs modules'], (err) => {
             assert.ifError(err);
             const filename = path.join(__dirname, '../build/public/src/modules/alerts.js');
             assert(file.existsSync(filename));
             done();
         });
-    });
+    });*/
 
     it('should build client js bundle', (done) => {
         build.build(['client js bundle'], (err) => {

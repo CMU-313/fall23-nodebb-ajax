@@ -608,7 +608,7 @@ describe('Flags', () => {
                 assert.ifError(err);
                 const compare = {
                     uid: 1,
-                    username: 'testUser',
+                    username: 'testUser-student',
                     email: 'b@c.com',
                 };
 
