@@ -5,9 +5,15 @@ const url = require('url');
 const plugins = require('../plugins');
 const meta = require('../meta');
 const user = require('../user');
+const { assert } = require('console');
 
+
+// return type should be string
 function adminHomePageRoute() {
-    return ((meta.config.homePageRoute === 'custom' ? meta.config.homePageCustom : meta.config.homePageRoute) || 'categories').replace(/^\//, '');
+    // assert return type string
+    const output = ((meta.config.homePageRoute === 'custom' ? meta.config.homePageCustom : meta.config.homePageRoute) || 'tags').replace(/^\//, '');
+    assert(typeof output == "string")
+    return output;
 }
 
 async function getUserHomeRoute(uid) {
