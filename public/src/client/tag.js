@@ -5,7 +5,6 @@ define('forum/tag', ['topicList', 'forum/infinitescroll'], function (topicList) 
 
     Tag.init = function () {
         app.enterRoom('tags');
-
         topicList.init('tag');
     };
 

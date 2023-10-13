@@ -23,6 +23,10 @@
                                 <label for="create-tag-name">Class Name</label>
                                 <input type="text" class="form-control" id="create-tag-name" placeholder="Class Name" />
                             </div>
+                            <div class="form-group">
+                                <label for="create-tag-students">Students</label>
+                                <input type="text" class="form-control" id="create-tag-students" placeholder="Enter students here (comma separated)" />
+                            </div>
                         </form>
                     </div>
                     <div class="modal-footer">

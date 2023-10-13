@@ -77,6 +77,7 @@ tagsController.getTags = async function (req, res) {
         topics.getCategoryTagsData(cids, 0, 99),
         user.canCreateTag(req.uid),
     ]);
+
     
     const courses = (await db.getSetMembers(`uid:${req.uid}:courses`));
 

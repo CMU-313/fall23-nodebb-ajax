@@ -28,6 +28,7 @@ define('forum/tags', ['forum/infinitescroll', 'alerts'], function (infinitescrol
         const createModal = $('#create-modal');
         const createTagName = $('#create-tag-name');
         const createModalGo = $('#create-modal-go');
+        const createTagStudents = $('#create-tag-students');
 
         // map enter key press to create button click
         createModal.on('keypress', function (e) {
@@ -48,6 +49,8 @@ define('forum/tags', ['forum/infinitescroll', 'alerts'], function (infinitescrol
         createModalGo.on('click', function () {
             socket.emit('admin.tags.create', {
                 tag: createTagName.val(),
+                uid: app.user.uid,
+                students: createTagStudents.val().split(',').map(item => item.trim()),
             }, function (err) {
                 if (err) {
                     return alerts.error(err);
