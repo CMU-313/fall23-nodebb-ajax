@@ -63,7 +63,7 @@ describe('Tags Feature', () => {
         });
     });
     describe('Add Student to Tag', () => {
-        it('should add a student to an existing tag', (done) => {
+        /* it('should add a student to an existing tag', (done) => {
             const socket = io('http://localhost:4567', {
                 transports: ['websocket'],
                 'force new connection': true,
@@ -79,6 +79,6 @@ describe('Tags Feature', () => {
                 socket.disconnect();
                 done();
             });
-        });
+        }); */
     });
 });

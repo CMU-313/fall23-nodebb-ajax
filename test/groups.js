@@ -192,7 +192,7 @@ describe('Groups', () => {
         it('should search group members', (done) => {
             socketGroups.searchMembers({ uid: adminUid }, { groupName: 'Test', query: 'test' }, (err, data) => {
                 assert.ifError(err);
-                assert.strictEqual('testuser', data.users[0].username);
+                assert.strictEqual('testuser-student', data.users[0].username);
                 done();
             });
         });
@@ -976,7 +976,7 @@ describe('Groups', () => {
         it('should issue mass invite to users', (done) => {
             User.create({ username: 'invite2' }, (err, uid) => {
                 assert.ifError(err);
-                socketGroups.issueMassInvite({ uid: adminUid }, { groupName: 'PrivateCanJoin', usernames: 'invite1, invite2' }, (err) => {
+                socketGroups.issueMassInvite({ uid: adminUid }, { groupName: 'PrivateCanJoin', usernames: 'invite1-student, invite2-student' }, (err) => {
                     assert.ifError(err);
                     Groups.isInvited([adminUid, uid], 'PrivateCanJoin', (err, isInvited) => {
                         assert.ifError(err);

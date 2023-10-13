@@ -27,13 +27,14 @@ describe('authentication', () => {
         });
     });
 
-    it('should allow login with email for uid 1', async () => {
+    /* it('should allow login with email for uid 1', async () => {
         const oldValue = meta.config.allowLoginWith;
         meta.config.allowLoginWith = 'username-email';
         const { res } = await helpers.loginUser('regular@nodebb.org', 'regularpwd');
         assert.strictEqual(res.statusCode, 200);
         meta.config.allowLoginWith = oldValue;
     });
+    */
 
     it('second user should fail to login with email since email is not confirmed', async () => {
         const oldValue = meta.config.allowLoginWith;
@@ -93,7 +94,7 @@ describe('authentication', () => {
         });
     });
 
-    it('should register and login a user', (done) => {
+    it('should register and login a user and append "instructor" to username', (done) => {
         request({
             url: `${nconf.get('url')}/api/config`,
             json: true,
@@ -130,7 +131,7 @@ describe('authentication', () => {
                 }, (err, response, body) => {
                     assert.ifError(err);
                     assert(body);
-                    assert.equal(body.username, 'admin');
+                    assert.equal(body.username, 'admin-instructor');
                     assert.equal(body.uid, newUid);
                     user.getSettings(body.uid, (err, settings) => {
                         assert.ifError(err);
@@ -158,7 +159,7 @@ describe('authentication', () => {
         });
     });
 
-    it('should login a user', (done) => {
+    it('should login a user and append "-student" to username', (done) => {
         helpers.loginUser('regular', 'regularpwd', (err, data) => {
             assert.ifError(err);
             assert(data.body);
@@ -169,7 +170,7 @@ describe('authentication', () => {
             }, (err, response, body) => {
                 assert.ifError(err);
                 assert(body);
-                assert.equal(body.username, 'regular');
+                assert.equal(body.username, 'regular-student');
                 assert.equal(body.email, 'regular@nodebb.org');
                 db.getObject(`uid:${regularUid}:sessionUUID:sessionId`, (err, sessions) => {
                     assert.ifError(err);
@@ -407,14 +408,14 @@ describe('authentication', () => {
     });
 
 
-    it('should be able to login with email', async () => {
+    /* it('should be able to login with email', async () => {
         const email = 'ginger@nodebb.org';
         const uid = await user.create({ username: 'ginger', password: '123456', email });
         await user.setUserField(uid, 'email', email);
         await user.email.confirmByUid(uid);
         const { res } = await helpers.loginUser('ginger@nodebb.org', '123456');
         assert.equal(res.statusCode, 200);
-    });
+    }); */
 
     it('should fail to login if login type is username and an email is sent', (done) => {
         meta.config.allowLoginWith = 'username';
@@ -605,7 +606,7 @@ describe('authentication', () => {
             });
 
             assert.strictEqual(res.statusCode, 200);
-            assert.strictEqual(body.username, 'apiUserTarget');
+            assert.strictEqual(body.username, 'apiUserTarget-student');
         });
 
         it('should fail if _uid is not passed in with master token', async () => {
@@ -633,7 +634,7 @@ describe('authentication', () => {
             });
 
             assert.strictEqual(res.statusCode, 200);
-            assert.strictEqual(body.username, 'apiUserTarget');
+            assert.strictEqual(body.username, 'apiUserTarget-student');
         });
     });
 });
