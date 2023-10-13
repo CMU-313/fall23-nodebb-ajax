@@ -6,6 +6,8 @@ const querystring = require('querystring');
 const _ = require('lodash');
 const chalk = require('chalk');
 
+const { assert } = require('console');
+
 const translator = require('../translator');
 const user = require('../user');
 const privileges = require('../privileges');
@@ -391,8 +393,15 @@ function checkVisibleChildren(c, cidToAllowed, cidToWatchState, states) {
     ));
 }
 
+// parameter uid is of type number
+// return type is of type array (object)
 helpers.getHomePageRoutes = async function (uid) {
+    assert(typeof uid === 'number');
     const routes = [
+        {
+            route: 'tags',
+            name: 'Tags',
+        },
         {
             route: 'categories',
             name: 'Categories',
@@ -422,6 +431,7 @@ helpers.getHomePageRoutes = async function (uid) {
         uid: uid,
         routes: routes,
     });
+    assert(typeof data.routes === 'object');
     return data.routes;
 };
 

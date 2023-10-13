@@ -8,7 +8,8 @@
 <div class="tags">
     <!-- IF displayCreateButton -->
     <div class="create-tag">
-        <button class="btn btn-primary btn-block" id="create">Create Class</button>
+        <button class="btn btn-primary btn-block" id="create">Create Course</button>
+
         <div class="modal fade" id="create-modal">
             <div class="modal-dialog">
                 <div class="modal-content">
