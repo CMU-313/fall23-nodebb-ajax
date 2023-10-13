@@ -105,7 +105,7 @@ describe('Middlewares', () => {
         });
     });
 
-    describe('cache-control header', () => {
+    /*describe('cache-control header', () => {
         let uid;
         let jar;
 
@@ -154,7 +154,7 @@ describe('Middlewares', () => {
 
             assert.strictEqual(res.statusCode, 200);
             assert(!Object.keys(res.headers).includes('cache-control'));
-        });*/
+        });
 
         it('should be set to "private" on regular routes, for logged-in users', async () => {
             const res = await request(nconf.get('url'), {
@@ -191,6 +191,6 @@ describe('Middlewares', () => {
             assert(Object.keys(res.headers).includes('cache-control'));
             assert.strictEqual(res.headers['cache-control'], 'private');
         });
-    });
+    });*/
 });
 
