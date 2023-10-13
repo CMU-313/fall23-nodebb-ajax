@@ -27,13 +27,14 @@ describe('authentication', () => {
         });
     });
 
-    /*it('should allow login with email for uid 1', async () => {
+    /* it('should allow login with email for uid 1', async () => {
         const oldValue = meta.config.allowLoginWith;
         meta.config.allowLoginWith = 'username-email';
         const { res } = await helpers.loginUser('regular@nodebb.org', 'regularpwd');
         assert.strictEqual(res.statusCode, 200);
         meta.config.allowLoginWith = oldValue;
-    });*/
+    });
+    */
 
     it('second user should fail to login with email since email is not confirmed', async () => {
         const oldValue = meta.config.allowLoginWith;
@@ -407,14 +408,14 @@ describe('authentication', () => {
     });
 
 
-    /*it('should be able to login with email', async () => {
+    /* it('should be able to login with email', async () => {
         const email = 'ginger@nodebb.org';
         const uid = await user.create({ username: 'ginger', password: '123456', email });
         await user.setUserField(uid, 'email', email);
         await user.email.confirmByUid(uid);
         const { res } = await helpers.loginUser('ginger@nodebb.org', '123456');
         assert.equal(res.statusCode, 200);
-    });*/
+    }); */
 
     it('should fail to login if login type is username and an email is sent', (done) => {
         meta.config.allowLoginWith = 'username';

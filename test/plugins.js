@@ -170,7 +170,7 @@ describe('Plugins', () => {
         });
     });
 
-    /*it('should get plugin data from nbbpm', (done) => {
+    /* it('should get plugin data from nbbpm', (done) => {
         plugins.get('nodebb-plugin-markdown', (err, data) => {
             assert.ifError(err);
             const keys = ['id', 'name', 'url', 'description', 'latest', 'installed', 'active', 'latest'];
@@ -201,7 +201,8 @@ describe('Plugins', () => {
 
         plugins.showInstalled((err, pluginsData) => {
             assert.ifError(err);
-            const paths = pluginsData.map(plugin => path.relative(plugins.nodeModulesPath, plugin.path).replace(/\\/g, '/'));
+            const paths = pluginsData.map(plugin => path.relative(plugins.nodeModulesPath,
+                plugin.path).replace(/\\/g, '/'));
             assert(paths.indexOf('nodebb-plugin-xyz') > -1);
             assert(paths.indexOf('@nodebb/nodebb-plugin-abc') > -1);
 
@@ -266,7 +267,8 @@ describe('Plugins', () => {
             plugins.upgrade(pluginName, 'latest', (err, isActive) => {
                 assert.ifError(err);
                 assert(isActive);
-                plugins.loadPluginInfo(path.join(nconf.get('base_dir'), 'node_modules', pluginName), (err, pluginInfo) => {
+                plugins.loadPluginInfo(path.join(nconf.get('base_dir'),
+                'node_modules', pluginName), (err, pluginInfo) => {
                     assert.ifError(err);
                     assert.equal(pluginInfo.version, latest);
                     done();
@@ -287,7 +289,7 @@ describe('Plugins', () => {
                 done();
             });
         });
-    });*/
+    }); */
 
     describe('static assets', () => {
         it('should 404 if resource does not exist', (done) => {
@@ -397,7 +399,7 @@ describe('Plugins', () => {
                 });
             });
         });
-    });*/
+    }); */
 });
 
 

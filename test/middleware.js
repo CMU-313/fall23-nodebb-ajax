@@ -105,7 +105,7 @@ describe('Middlewares', () => {
         });
     });
 
-    /*describe('cache-control header', () => {
+    /* describe('cache-control header', () => {
         let uid;
         let jar;
 
@@ -146,7 +146,7 @@ describe('Middlewares', () => {
             assert(!Object.keys(res.headers).includes('cache-control'));
         });*/
 
-        /*it('should be absent on api routes, for guests', async () => {
+    /* it('should be absent on api routes, for guests', async () => {
             const res = await request(`${nconf.get('url')}/api`, {
                 simple: false,
                 resolveWithFullResponse: true,
@@ -191,6 +191,6 @@ describe('Middlewares', () => {
             assert(Object.keys(res.headers).includes('cache-control'));
             assert.strictEqual(res.headers['cache-control'], 'private');
         });
-    });*/
+    }); */
 });
 

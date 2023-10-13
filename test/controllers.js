@@ -106,14 +106,14 @@ describe('Controllers', () => {
             await meta.templates.compileTemplate(name, message);
         });
 
-        /*it('should load default', (done) => {
+        /* it('should load default', (done) => {
             request(nconf.get('url'), (err, res, body) => {
                 assert.ifError(err);
                 assert.equal(res.statusCode, 200);
                 assert(body);
                 done();
             });
-        });*/
+        }); */
 
         it('should load unread', (done) => {
             meta.configs.set('homePageRoute', 'unread', (err) => {
@@ -1049,10 +1049,10 @@ describe('Controllers', () => {
                 assert.strictEqual(res.statusCode, 404);
                 const parsedResponse = JSON.parse(body);
                 assert.deepStrictEqual(parsedResponse.response, {});
-                /*assert.deepStrictEqual(parsedResponse.status, {
+                /* assert.deepStrictEqual(parsedResponse.status, {
                     code: 'not-found',
                     message: 'User does not exist',
-                });*/
+                }); */
                 done();
             });
         });
@@ -1167,7 +1167,7 @@ describe('Controllers', () => {
             });
         });
 
-        /*it('should render tags page', (done) => {
+        /* it('should render tags page', (done) => {
             request(`${nconf.get('url')}/api/tags`, { json: true }, (err, res, body) => {
                 assert.ifError(err);
                 assert.equal(res.statusCode, 200);
@@ -1175,7 +1175,7 @@ describe('Controllers', () => {
                 assert(Array.isArray(body.tags));
                 done();
             });
-        });*/
+        }); */
 
         it('should render tag page with no topics', (done) => {
             request(`${nconf.get('url')}/api/tags/notag`, { json: true }, (err, res, body) => {

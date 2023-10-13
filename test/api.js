@@ -425,9 +425,13 @@ describe('API', async () => {
                     }
                 });
 
-                /*it(`${_method.toUpperCase()} ${path}: response status code should match one of the schema defined responses`, () => {
+                /* it(`${_method.toUpperCase()} ${path}: response status code should
+                match one of the schema defined responses`, () => {
                     // HACK: allow HTTP 418 I am a teapot, for now   👇
-                    assert(context[method].responses.hasOwnProperty('418') || Object.keys(context[method].responses).includes(String(response.statusCode)), `${method.toUpperCase()} ${path} sent back unexpected HTTP status code: ${response.statusCode} ${JSON.stringify(response.body)}`);
+                    assert(context[method].responses.hasOwnProperty('418') || Object.keys(context[method].responses)
+                    .includes(String(response.statusCode)), `${method.toUpperCase()} ${path}
+                    sent back unexpected HTTP status code:
+                    ${response.statusCode} ${JSON.stringify(response.body)}`);
                 });
 
                 // Recursively iterate through schema properties, comparing type
@@ -437,7 +441,8 @@ describe('API', async () => {
                         // Compare headers instead
                         const expectedHeaders = Object.keys(http302.headers).reduce((memo, name) => {
                             const value = http302.headers[name].schema.example;
-                            memo[name] = value.startsWith(nconf.get('relative_path')) ? value : nconf.get('relative_path') + value;
+                            memo[name] = value.startsWith(nconf.get('relative_path')) ?
+                            value : nconf.get('relative_path') + value;
                             return memo;
                         }, {});
 
@@ -462,7 +467,7 @@ describe('API', async () => {
                     }
 
                     // TODO someday: text/csv, binary file type checking?
-                });*/
+                }); */
 
                 it(`${_method.toUpperCase()} ${path}: should successfully re-login if needed`, async () => {
                     const reloginPaths = ['PUT /users/{uid}/password', 'DELETE /users/{uid}/sessions/{uuid}'];

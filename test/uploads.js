@@ -421,8 +421,9 @@ describe('Upload Controllers', () => {
             });
         });
 
-        /*it('should upload regular file', (done) => {
-            helpers.uploadFile(`${nconf.get('url')}/api/admin/upload/file`, path.join(__dirname, '../test/files/test.png'), {
+        /* it('should upload regular file', (done) => {
+            helpers.uploadFile(`${nconf.get('url')}/api/admin/upload/file`,
+            path.join(__dirname, '../test/files/test.png'), {
                 params: JSON.stringify({
                     folder: 'system',
                 }),
@@ -437,7 +438,8 @@ describe('Upload Controllers', () => {
         });
 
         it('should fail to upload regular file in wrong directory', (done) => {
-            helpers.uploadFile(`${nconf.get('url')}/api/admin/upload/file`, path.join(__dirname, '../test/files/test.png'), {
+            helpers.uploadFile(`${nconf.get('url')}/api/admin/upload/file`,
+            path.join(__dirname, '../test/files/test.png'), {
                 params: JSON.stringify({
                     folder: '../../system',
                 }),
@@ -447,9 +449,9 @@ describe('Upload Controllers', () => {
                 assert.strictEqual(body.error, '[[error:invalid-path]]');
                 done();
             });
-        });*/
-
-        /*describe('ACP uploads screen', () => {
+        }); 
+        
+        describe('ACP uploads screen', () => {
             it('should create a folder', async () => {
                 const res = await helpers.createFolder('', 'myfolder', jar, csrf_token);
                 assert.strictEqual(res.statusCode, 200);
@@ -509,7 +511,7 @@ describe('Upload Controllers', () => {
                     message: 'You are not authorised to make this call',
                 });
             });
-        });*/
+        }); */
 
         after(emptyUploadsFolder);
     });
@@ -566,13 +568,13 @@ describe('Upload Controllers', () => {
                 assert.strictEqual(orphans.length, 2);
             });
 
-            /*it('should delete orphans older than the configured number of days', async () => {
+            /* it('should delete orphans older than the configured number of days', async () => {
                 meta.config.orphanExpiryDays = 7;
                 await posts.uploads.cleanOrphans();
                 const orphans = await posts.uploads.getOrphans();
 
                 assert.strictEqual(orphans.length, 0);
-            });*/
+            }); */
 
             after(async () => {
                 await emptyUploadsFolder();

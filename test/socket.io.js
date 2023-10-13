@@ -459,7 +459,7 @@ describe('socket.io', () => {
         });
     });
 
-    /*it('should toggle plugin install', function (done) {
+    /* it('should toggle plugin install', function (done) {
         this.timeout(0);
         const oldValue = process.env.NODE_ENV;
         process.env.NODE_ENV = 'development';
@@ -474,7 +474,7 @@ describe('socket.io', () => {
             process.env.NODE_ENV = oldValue;
             done();
         });
-    });*/
+    }); */
 
     it('should get list of active plugins', (done) => {
         socketAdmin.plugins.getActive({ uid: adminUid }, {}, (err, data) => {
