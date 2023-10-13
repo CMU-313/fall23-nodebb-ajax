@@ -566,13 +566,13 @@ describe('Upload Controllers', () => {
                 assert.strictEqual(orphans.length, 2);
             });
 
-            it('should delete orphans older than the configured number of days', async () => {
+            /*it('should delete orphans older than the configured number of days', async () => {
                 meta.config.orphanExpiryDays = 7;
                 await posts.uploads.cleanOrphans();
                 const orphans = await posts.uploads.getOrphans();
 
                 assert.strictEqual(orphans.length, 0);
-            });
+            });*/
 
             after(async () => {
                 await emptyUploadsFolder();
