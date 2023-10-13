@@ -12,6 +12,7 @@ const privileges = require('../privileges');
 const pagination = require('../pagination');
 const utils = require('../utils');
 const helpers = require('./helpers');
+const db = require('../database');
 
 const tagsController = module.exports;
 
@@ -77,10 +78,10 @@ tagsController.getTags = async function (req, res) {
         user.canCreateTag(req.uid),
     ]);
     
-
+    const courses = (await db.getSetMembers(`uid:${req.uid}:courses`));
 
     res.render('tags', {
-        tags: tags.filter(Boolean),
+        tags: tags.filter((item) => item && courses.includes(item.value)),
         displayTagSearch: canSearch,
         displayCreateButton: displayCreate,
         nextStart: 100,
