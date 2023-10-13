@@ -1,6 +1,6 @@
 # User Guide for Courses Features
 
-This user guide provides detailed instructions on how to create a new course and add student to a course, as well as how to test them. 
+This user guide provides detailed instructions on how to create a new course with students added to it, as well as how to test them. 
 
 ## Table of Contents
 
@@ -19,37 +19,40 @@ This user guide provides detailed instructions on how to create a new course and
 
 ### Overview of New Features
 
-As a user registered as an instructor (admin), he/she can create a course in the homepage of NodeBB, as well as adding students to a specific course. For student users, they can see what courses they are in and click and see what's in the course. Only instructors can create courses and add students to courses. Each users' username has been appended a role type.
+In this application, courses are the equivalent of tags in base NodeBB. Thus, we have reset the homepage of NodeBB to be the tags page (will now call this the courses page).
+
+As a user registered as an instructor, he/she can create a course on the courses page via a new button. When the create course button is clicked, a modal will appear that gives the instructor the opportunity to name the course and add students to the course in the form of a comma separated list of usernames. When instructors visit the courses page, they will only see the courses they have created. When students visit the course page, they will only see the courses that they have been added to. Further, students do not have the option to create a course.
+
+When a student or instructor clicks on a course, they can make posts in it just like posting to a specific tag in base NodeBB.
+
+The last new feature just appends 'instructor' or 'student' to account usernames, so it is clear what role every poster has.
 
 ## 2. How to Use the New Features
 
-### Creating a New Course
+### Creating a New Course and Adding Students
 
 To create a new course in the system, follow these steps: 
 
 1. Log in to your instructor account 
-2. Navigate to the "Courses" section in the app.
+2. Navigate to homepage
 3. Click on "Create Course."
-4. Enter course code in the text box.
-5. Click "Create Class."
+4. Enter course name where indicated.
+5. Enter the usernames of the students in the course as a comma separated list where indicated.
+6. Click "Create Course"
 
-### Adding a Student to a Course
+### Seeing your Courses
 
-To add a student to a course, follow these steps:
+To see the courses that you are a member of, follow these steps:
 
-1. Log in to your instructor account.
-2. Navigate to the "Courses" section in the app.
-3. Select the course to which you want to add a student.
-4. Click on the "Add Student" button.
-5. Enter the student's username and other required information.
-6. Click "Save" to confirm.
+1. Navigate to homepage
+2. Only courses that you are a member of will be shown (for instructors only courses they created, for students only courses that they were added to)
 
-### See What Course the User is in
+### See What Role a Poster Is (Student or Instructor)
 
-To check and see what courses you are in, follow these steps: 
+To see what role a poster is, follow these steps: 
 
-1. Log in to your student account 
-2. Navigate to the "Courses" section in the app.
+1. Navigate to post
+2. Look at the username of the poster; a suffix of '-student' indicates that they are a student while a suffix of '-instructor' indicates that they are an instructor
 
 ## 3. Automated Tests
 
