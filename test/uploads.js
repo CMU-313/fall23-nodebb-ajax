@@ -449,8 +449,8 @@ describe('Upload Controllers', () => {
                 assert.strictEqual(body.error, '[[error:invalid-path]]');
                 done();
             });
-        }); 
-        
+        });
+
         describe('ACP uploads screen', () => {
             it('should create a folder', async () => {
                 const res = await helpers.createFolder('', 'myfolder', jar, csrf_token);

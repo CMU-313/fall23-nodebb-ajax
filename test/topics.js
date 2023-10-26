@@ -1848,7 +1848,7 @@ describe('Topic\'s', () => {
             });
         });
 
-        /*it('should create empty tag', (done) => {
+        /* it('should create empty tag', (done) => {
             socketAdmin.tags.create({ uid: adminUid }, { tag: 'emptytag' }, (err) => {
                 assert.ifError(err);
                 db.sortedSetScore('tags:topic:count', 'emptytag', (err, score) => {
@@ -1857,9 +1857,9 @@ describe('Topic\'s', () => {
                     done();
                 });
             });
-        });*/
+        }); */
 
-        /*it('should do nothing if tag exists', (done) => {
+        /* it('should do nothing if tag exists', (done) => {
             socketAdmin.tags.create({ uid: adminUid }, { tag: 'emptytag' }, (err) => {
                 assert.ifError(err);
                 db.sortedSetScore('tags:topic:count', 'emptytag', (err, score) => {
@@ -1868,7 +1868,7 @@ describe('Topic\'s', () => {
                     done();
                 });
             });
-        });*/
+        }); */
 
 
         it('should rename tags', async () => {
@@ -1919,10 +1919,11 @@ describe('Topic\'s', () => {
             });
         });
 
-        /*it('should delete tags', (done) => {
+        /* it('should delete tags', (done) => {
             socketAdmin.tags.create({ uid: adminUid }, { tag: 'emptytag2' }, (err) => {
                 assert.ifError(err);
-                socketAdmin.tags.deleteTags({ uid: adminUid }, { tags: ['emptytag', 'emptytag2', 'nodebb', 'nodejs'] }, (err) => {
+                socketAdmin.tags.deleteTags({ uid: adminUid },
+                    { tags: ['emptytag', 'emptytag2', 'nodebb', 'nodejs'] }, (err) => {
                     assert.ifError(err);
                     db.getObjects(['tag:emptytag', 'tag:emptytag2'], (err, data) => {
                         assert.ifError(err);
@@ -1932,7 +1933,7 @@ describe('Topic\'s', () => {
                     });
                 });
             });
-        });*/
+        }); */
 
         it('should delete tag', (done) => {
             topics.deleteTag('javascript', (err) => {
