@@ -79,5 +79,11 @@ jobs:
         run: |
           node app --setup="${SETUP}" --ci="${CI}"
 
+      - name: Install Semgrep
+        run: python3 -m pip install semgrep
+
+      - name: Run Semgrep
+        run: semgrep --config auto --output scan_results.json --json
+
       - name: Run ESLint
         run: npm run lint
