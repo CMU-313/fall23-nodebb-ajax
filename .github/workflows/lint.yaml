@@ -81,3 +81,9 @@ jobs:
 
       - name: Run ESLint
         run: npm run lint
+
+      - name: Install Semgrep
+        run: python3 -m pip install semgrep
+
+      - name: Run Semgrep
+        run: semgrep --config auto --output scan_results.json --json
