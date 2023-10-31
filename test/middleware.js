@@ -144,7 +144,7 @@ describe('Middlewares', () => {
 
             assert.strictEqual(res.statusCode, 200);
             assert(!Object.keys(res.headers).includes('cache-control'));
-        });*/
+        }); */
 
     /* it('should be absent on api routes, for guests', async () => {
             const res = await request(`${nconf.get('url')}/api`, {

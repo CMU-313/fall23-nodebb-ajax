@@ -718,7 +718,7 @@ describe('User', () => {
                 assert(data[0]);
                 assert.equal(data[0].username, '[[global:guest]]');
                 assert(data[1]);
-                assert.equal(data[1].username, (userData.username + '-student'));
+                assert.equal(data[1].username, (`${userData.username}-student`));
                 done();
             });
         });
@@ -1276,7 +1276,7 @@ describe('User', () => {
                 });
             });
         });
-        
+
         it('should load profile page', (done) => {
             request(`${nconf.get('url')}/api/user/updatedagain`, { jar: jar, json: true }, (err, res, body) => {
                 assert.ifError(err);

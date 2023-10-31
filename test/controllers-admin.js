@@ -816,7 +816,7 @@ describe('Admin Controllers', () => {
                 done();
             });
         });
-    });*/
+    }); */
 
     describe('admin page privileges', () => {
         let userJar;
