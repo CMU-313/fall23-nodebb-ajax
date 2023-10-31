@@ -13,8 +13,8 @@ jobs:
       with:
         fetch-depth: 0
 
-    - name: List directory content
-      run: ls -al
+    - name: Copy package.json to root
+      run: cp install/package.json package.json
 
     - name: Use Node.js
       uses: actions/setup-node@v2
@@ -29,3 +29,7 @@ jobs:
 
     - name: Run Flow
       run: npx flow
+
+    # Optional step to clean up
+    - name: Remove package.json from root
+      run: rm package.json
