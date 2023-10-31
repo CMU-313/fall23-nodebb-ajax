@@ -1922,7 +1922,8 @@ describe('Topic\'s', () => {
         /* it('should delete tags', (done) => {
             socketAdmin.tags.create({ uid: adminUid }, { tag: 'emptytag2' }, (err) => {
                 assert.ifError(err);
-                socketAdmin.tags.deleteTags({ uid: adminUid }, { tags: ['emptytag', 'emptytag2', 'nodebb', 'nodejs'] }, (err) => {
+                socketAdmin.tags.deleteTags({ uid: adminUid },
+                    { tags: ['emptytag', 'emptytag2', 'nodebb', 'nodejs'] }, (err) => {
                     assert.ifError(err);
                     db.getObjects(['tag:emptytag', 'tag:emptytag2'], (err, data) => {
                         assert.ifError(err);

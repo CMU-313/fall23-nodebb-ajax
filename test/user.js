@@ -2044,7 +2044,8 @@ describe('User', () => {
                 assert.ifError(err);
                 helpers.loginUser('admin', '123456', (err, data) => {
                     assert.ifError(err);
-                    request(`${nconf.get('url')}/api/admin/manage/registration`, { jar: data.jar, json: true }, (err, res, body) => {
+                    request(`${nconf.get('url')}/api/admin/manage/registration`,
+                    { jar: data.jar, json: true }, (err, res, body) => {
                         assert.ifError(err);
                         assert.equal(body.users[0].username, 'rejectme');
                         assert.equal(body.users[0].email,
