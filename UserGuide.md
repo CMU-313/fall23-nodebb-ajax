@@ -1,19 +1,19 @@
 # User Guide for Courses Features
 
-This user guide provides detailed instructions on how to create a new course with students added to it, as well as how to test them. 
+This user guide provides detailed instructions on how to create a new course with students added to it, as well as how to test them.
 
 ## Table of Contents
 
 1. **Introduction**
-   - Overview of New Features
-   
+    - Overview of New Features
 2. **How to Use the New Features**
-   - Step-by-Step Instructions
+
+    - Step-by-Step Instructions
 
 3. **Automated Tests**
-   - Location of Tests
-   - Description of Tests
-   - Test Coverage Explanation
+    - Location of Tests
+    - Description of Tests
+    - Test Coverage Explanation
 
 ## 1. Introduction
 
@@ -31,9 +31,9 @@ The last new feature just appends 'instructor' or 'student' to account usernames
 
 ### Creating a New Course and Adding Students
 
-To create a new course in the system, follow these steps: 
+To create a new course in the system, follow these steps:
 
-1. Log in to your instructor account 
+1. Log in to your instructor account
 2. Navigate to homepage
 3. Click on "Create Course."
 4. Enter course name where indicated.
@@ -49,7 +49,7 @@ To see the courses that you are a member of, follow these steps:
 
 ### See What Role a Poster Is (Student or Instructor)
 
-To see what role a poster is, follow these steps: 
+To see what role a poster is, follow these steps:
 
 1. Navigate to post
 2. Look at the username of the poster; a suffix of '-student' indicates that they are a student while a suffix of '-instructor' indicates that they are an instructor
@@ -76,9 +76,9 @@ The tests cover the following scenarios:
 
 The tests are considered sufficient for covering the changes made to the tags feature because they evaluate all essential operations and potential scenarios:
 
-- **Create:** Verifies the creation process.
-- **Rename:** Ensures tags can be renamed without issues.
-- **Update:** Checks if students can be added to courses.
-- **Delete:** Validates that tags can be deleted, and all related data is cleaned up.
+-   **Create:** Verifies the creation process.
+-   **Rename:** Ensures tags can be renamed without issues.
+-   **Update:** Checks if students can be added to courses.
+-   **Delete:** Validates that tags can be deleted, and all related data is cleaned up.
 
 These tests help maintain the reliability and functionality of the tags feature by catching any regressions or issues that might arise due to future code changes.

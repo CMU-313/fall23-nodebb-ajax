@@ -1,11 +1,21 @@
 'use strict';
 
 define('persona/quickreply', [
-    'components', 'composer', 'composer/autocomplete', 'api',
-    'alerts', 'uploadHelpers', 'mousetrap',
+    'components',
+    'composer',
+    'composer/autocomplete',
+    'api',
+    'alerts',
+    'uploadHelpers',
+    'mousetrap',
 ], function (
-    components, composer, autocomplete, api,
-    alerts, uploadHelpers, mousetrap
+    components,
+    composer,
+    autocomplete,
+    api,
+    alerts,
+    uploadHelpers,
+    mousetrap
 ) {
     var QuickReply = {};
 
@@ -33,7 +43,9 @@ define('persona/quickreply', [
         });
 
         uploadHelpers.init({
-            dragDropAreaEl: $('[component="topic/quickreply/container"] .quickreply-message'),
+            dragDropAreaEl: $(
+                '[component="topic/quickreply/container"] .quickreply-message'
+            ),
             pasteEl: element,
             uploadFormEl: $('[component="topic/quickreply/upload"]'),
             inputEl: element,
@@ -41,7 +53,11 @@ define('persona/quickreply', [
             callback: function (uploads) {
                 let text = element.val();
                 uploads.forEach((upload) => {
-                    text = text + (text ? '\n' : '') + (upload.isImage ? '!' : '') + `[${upload.filename}](${upload.url})`;
+                    text =
+                        text +
+                        (text ? '\n' : '') +
+                        (upload.isImage ? '!' : '') +
+                        `[${upload.filename}](${upload.url})`;
                 });
                 element.val(text);
             },
@@ -62,33 +78,42 @@ define('persona/quickreply', [
             };
 
             ready = false;
-            api.post(`/topics/${ajaxify.data.tid}`, replyData, function (err, data) {
-                ready = true;
-                if (err) {
-                    return alerts.error(err);
-                }
-                if (data && data.queued) {
-                    alerts.alert({
-                        type: 'success',
-                        title: '[[global:alert.success]]',
-                        message: data.message,
-                        timeout: 10000,
-                        clickfn: function () {
-                            ajaxify.go(`/post-queue/${data.id}`);
-                        },
-                    });
-                }
+            api.post(
+                `/topics/${ajaxify.data.tid}`,
+                replyData,
+                function (err, data) {
+                    ready = true;
+                    if (err) {
+                        return alerts.error(err);
+                    }
+                    if (data && data.queued) {
+                        alerts.alert({
+                            type: 'success',
+                            title: '[[global:alert.success]]',
+                            message: data.message,
+                            timeout: 10000,
+                            clickfn: function () {
+                                ajaxify.go(`/post-queue/${data.id}`);
+                            },
+                        });
+                    }
 
-                components.get('topic/quickreply/text').val('');
-                autocomplete._active.persona_qr.hide();
-            });
+                    components.get('topic/quickreply/text').val('');
+                    autocomplete._active.persona_qr.hide();
+                }
+            );
         });
 
         components.get('topic/quickreply/expand').on('click', (e) => {
             e.preventDefault();
 
             const textEl = components.get('topic/quickreply/text');
-            composer.newReply(ajaxify.data.tid, undefined, ajaxify.data.title, utils.escapeHTML(textEl.val()));
+            composer.newReply(
+                ajaxify.data.tid,
+                undefined,
+                ajaxify.data.title,
+                utils.escapeHTML(textEl.val())
+            );
             textEl.val('');
         });
     };

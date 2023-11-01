@@ -12,13 +12,16 @@ const plugins = require('../src/plugins');
 describe('Plugins', () => {
     it('should load plugin data', (done) => {
         const pluginId = 'nodebb-plugin-markdown';
-        plugins.loadPlugin(path.join(nconf.get('base_dir'), `node_modules/${pluginId}`), (err) => {
-            assert.ifError(err);
-            assert(plugins.libraries[pluginId]);
-            assert(plugins.loadedHooks['static:app.load']);
+        plugins.loadPlugin(
+            path.join(nconf.get('base_dir'), `node_modules/${pluginId}`),
+            (err) => {
+                assert.ifError(err);
+                assert(plugins.libraries[pluginId]);
+                assert(plugins.loadedHooks['static:app.load']);
 
-            done();
-        });
+                done();
+            }
+        );
     });
 
     it('should return true if hook has listeners', (done) => {
@@ -36,8 +39,14 @@ describe('Plugins', () => {
             callback(null, data);
         }
 
-        plugins.hooks.register('test-plugin', { hook: 'filter:test.hook', method: filterMethod1 });
-        plugins.hooks.register('test-plugin', { hook: 'filter:test.hook', method: filterMethod2 });
+        plugins.hooks.register('test-plugin', {
+            hook: 'filter:test.hook',
+            method: filterMethod1,
+        });
+        plugins.hooks.register('test-plugin', {
+            hook: 'filter:test.hook',
+            method: filterMethod2,
+        });
 
         plugins.hooks.fire('filter:test.hook', { foo: 1 }, (err, data) => {
             assert.ifError(err);
@@ -62,9 +71,18 @@ describe('Plugins', () => {
             return data;
         }
 
-        plugins.hooks.register('test-plugin', { hook: 'filter:test.hook2', method: method1 });
-        plugins.hooks.register('test-plugin', { hook: 'filter:test.hook2', method: method2 });
-        plugins.hooks.register('test-plugin', { hook: 'filter:test.hook2', method: method3 });
+        plugins.hooks.register('test-plugin', {
+            hook: 'filter:test.hook2',
+            method: method1,
+        });
+        plugins.hooks.register('test-plugin', {
+            hook: 'filter:test.hook2',
+            method: method2,
+        });
+        plugins.hooks.register('test-plugin', {
+            hook: 'filter:test.hook2',
+            method: method3,
+        });
 
         const data = await plugins.hooks.fire('filter:test.hook2', { foo: 1 });
         assert.strictEqual(data.foo, 8);
@@ -82,8 +100,14 @@ describe('Plugins', () => {
             return data;
         }
 
-        plugins.hooks.register('test-plugin', { hook: 'filter:test.hook3', method: method1 });
-        plugins.hooks.register('test-plugin', { hook: 'filter:test.hook3', method: method2 });
+        plugins.hooks.register('test-plugin', {
+            hook: 'filter:test.hook3',
+            method: method1,
+        });
+        plugins.hooks.register('test-plugin', {
+            hook: 'filter:test.hook3',
+            method: method2,
+        });
 
         const data = await plugins.hooks.fire('filter:test.hook3', { foo: 1 });
         assert.strictEqual(data.foo, 4);
@@ -96,7 +120,10 @@ describe('Plugins', () => {
                 reject(new Error('nope'));
             });
         }
-        plugins.hooks.register('test-plugin', { hook: 'filter:test.hook4', method: method });
+        plugins.hooks.register('test-plugin', {
+            hook: 'filter:test.hook4',
+            method: method,
+        });
         plugins.hooks.fire('filter:test.hook4', { foo: 1 }, (err) => {
             assert(err);
             done();
@@ -109,7 +136,10 @@ describe('Plugins', () => {
             done();
         }
 
-        plugins.hooks.register('test-plugin', { hook: 'action:test.hook', method: actionMethod });
+        plugins.hooks.register('test-plugin', {
+            hook: 'action:test.hook',
+            method: actionMethod,
+        });
         plugins.hooks.fire('action:test.hook', { bar: 'test' });
     });
 
@@ -119,7 +149,10 @@ describe('Plugins', () => {
             callback();
         }
 
-        plugins.hooks.register('test-plugin', { hook: 'static:test.hook', method: actionMethod });
+        plugins.hooks.register('test-plugin', {
+            hook: 'static:test.hook',
+            method: actionMethod,
+        });
         plugins.hooks.fire('static:test.hook', { bar: 'test' }, (err) => {
             assert.ifError(err);
             done();
@@ -133,7 +166,10 @@ describe('Plugins', () => {
                 resolve();
             });
         }
-        plugins.hooks.register('test-plugin', { hook: 'static:test.hook', method: method });
+        plugins.hooks.register('test-plugin', {
+            hook: 'static:test.hook',
+            method: method,
+        });
         plugins.hooks.fire('static:test.hook', { bar: 'test' }, (err) => {
             assert.ifError(err);
             done();
@@ -147,7 +183,10 @@ describe('Plugins', () => {
                 reject(new Error('just because'));
             });
         }
-        plugins.hooks.register('test-plugin', { hook: 'static:test.hook', method: method });
+        plugins.hooks.register('test-plugin', {
+            hook: 'static:test.hook',
+            method: method,
+        });
         plugins.hooks.fire('static:test.hook', { bar: 'test' }, (err) => {
             assert.strictEqual(err.message, 'just because');
             plugins.hooks.unregister('test-plugin', 'static:test.hook', method);
@@ -162,7 +201,10 @@ describe('Plugins', () => {
                 setTimeout(resolve, 6000);
             });
         }
-        plugins.hooks.register('test-plugin', { hook: 'static:test.hook', method: method });
+        plugins.hooks.register('test-plugin', {
+            hook: 'static:test.hook',
+            method: method,
+        });
         plugins.hooks.fire('static:test.hook', { bar: 'test' }, (err) => {
             assert.ifError(err);
             plugins.hooks.unregister('test-plugin', 'static:test.hook', method);
@@ -293,16 +335,21 @@ describe('Plugins', () => {
 
     describe('static assets', () => {
         it('should 404 if resource does not exist', (done) => {
-            request.get(`${nconf.get('url')}/plugins/doesnotexist/should404.tpl`, (err, res, body) => {
-                assert.ifError(err);
-                assert.equal(res.statusCode, 404);
-                assert(body);
-                done();
-            });
+            request.get(
+                `${nconf.get('url')}/plugins/doesnotexist/should404.tpl`,
+                (err, res, body) => {
+                    assert.ifError(err);
+                    assert.equal(res.statusCode, 404);
+                    assert(body);
+                    done();
+                }
+            );
         });
 
         it('should 404 if resource does not exist', (done) => {
-            const url = `${nconf.get('url')}/plugins/nodebb-plugin-dbsearch/dbsearch/templates/admin/plugins/should404.tpl`;
+            const url = `${nconf.get(
+                'url'
+            )}/plugins/nodebb-plugin-dbsearch/dbsearch/templates/admin/plugins/should404.tpl`;
             request.get(url, (err, res, body) => {
                 assert.ifError(err);
                 assert.equal(res.statusCode, 404);
@@ -312,7 +359,9 @@ describe('Plugins', () => {
         });
 
         it('should get resource', (done) => {
-            const url = `${nconf.get('url')}/assets/templates/admin/plugins/dbsearch.tpl`;
+            const url = `${nconf.get(
+                'url'
+            )}/assets/templates/admin/plugins/dbsearch.tpl`;
             request.get(url, (err, res, body) => {
                 assert.ifError(err);
                 assert.equal(res.statusCode, 200);
@@ -401,5 +450,3 @@ describe('Plugins', () => {
         });
     }); */
 });
-
-

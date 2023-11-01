@@ -25,56 +25,86 @@ describe('Admin Controllers', () => {
     let jar;
 
     before((done) => {
-        async.series({
-            category: function (next) {
-                categories.create({
-                    name: 'Test Category',
-                    description: 'Test category created by testing script',
-                }, next);
+        async.series(
+            {
+                category: function (next) {
+                    categories.create(
+                        {
+                            name: 'Test Category',
+                            description:
+                                'Test category created by testing script',
+                        },
+                        next
+                    );
+                },
+                adminUid: function (next) {
+                    user.create(
+                        { username: 'admin', password: 'barbar' },
+                        next
+                    );
+                },
+                regularUid: function (next) {
+                    user.create(
+                        { username: 'regular', password: 'regularpwd' },
+                        next
+                    );
+                },
+                regular2Uid: function (next) {
+                    user.create({ username: 'regular2' }, next);
+                },
+                moderatorUid: function (next) {
+                    user.create(
+                        { username: 'moderator', password: 'modmod' },
+                        next
+                    );
+                },
             },
-            adminUid: function (next) {
-                user.create({ username: 'admin', password: 'barbar' }, next);
-            },
-            regularUid: function (next) {
-                user.create({ username: 'regular', password: 'regularpwd' }, next);
-            },
-            regular2Uid: function (next) {
-                user.create({ username: 'regular2' }, next);
-            },
-            moderatorUid: function (next) {
-                user.create({ username: 'moderator', password: 'modmod' }, next);
-            },
-        }, async (err, results) => {
-            if (err) {
-                return done(err);
+            async (err, results) => {
+                if (err) {
+                    return done(err);
+                }
+                adminUid = results.adminUid;
+                regularUid = results.regularUid;
+                regular2Uid = results.regular2Uid;
+                moderatorUid = results.moderatorUid;
+                cid = results.category.cid;
+
+                const adminPost = await topics.post({
+                    uid: adminUid,
+                    title: 'test topic title',
+                    content: 'test topic content',
+                    cid: results.category.cid,
+                });
+                assert.ifError(err);
+                tid = adminPost.topicData.tid;
+                pid = adminPost.postData.pid;
+
+                const regularPost = await topics.post({
+                    uid: regular2Uid,
+                    title: "regular user's test topic title",
+                    content: 'test topic content',
+                    cid: results.category.cid,
+                });
+                regularPid = regularPost.postData.pid;
+                done();
             }
-            adminUid = results.adminUid;
-            regularUid = results.regularUid;
-            regular2Uid = results.regular2Uid;
-            moderatorUid = results.moderatorUid;
-            cid = results.category.cid;
-
-            const adminPost = await topics.post({ uid: adminUid, title: 'test topic title', content: 'test topic content', cid: results.category.cid });
-            assert.ifError(err);
-            tid = adminPost.topicData.tid;
-            pid = adminPost.postData.pid;
-
-            const regularPost = await topics.post({ uid: regular2Uid, title: 'regular user\'s test topic title', content: 'test topic content', cid: results.category.cid });
-            regularPid = regularPost.postData.pid;
-            done();
-        });
+        );
     });
 
     it('should 403 if user is not admin', (done) => {
         helpers.loginUser('admin', 'barbar', (err, data) => {
             assert.ifError(err);
             jar = data.jar;
-            request(`${nconf.get('url')}/admin`, { jar: jar }, (err, res, body) => {
-                assert.ifError(err);
-                assert.equal(res.statusCode, 403);
-                assert(body);
-                done();
-            });
+            request(
+                `${nconf.get('url')}/admin`,
+                { jar: jar },
+                (err, res, body) => {
+                    assert.ifError(err);
+                    assert.equal(res.statusCode, 403);
+                    assert(body);
+                    done();
+                }
+            );
         });
     });
 
@@ -816,14 +846,17 @@ describe('Admin Controllers', () => {
                 done();
             });
         });
-    });*/
+    }); */
 
     describe('admin page privileges', () => {
         let userJar;
         let uid;
         const privileges = require('../src/privileges');
         before(async () => {
-            uid = await user.create({ username: 'regularjoe', password: 'barbar' });
+            uid = await user.create({
+                username: 'regularjoe',
+                password: 'barbar',
+            });
             userJar = (await helpers.loginUser('regularjoe', 'barbar')).jar;
         });
 
@@ -882,23 +915,42 @@ describe('Admin Controllers', () => {
                 // this.timeout(50000);
                 function makeRequest(url) {
                     return new Promise((resolve, reject) => {
-                        request(url, { jar: userJar, json: true }, (err, res, body) => {
-                            if (err) reject(err);
-                            else resolve(res);
-                        });
+                        request(
+                            url,
+                            { jar: userJar, json: true },
+                            (err, res, body) => {
+                                if (err) reject(err);
+                                else resolve(res);
+                            }
+                        );
                     });
                 }
-                for (const route of Object.keys(privileges.admin.routePrefixMap)) {
+                for (const route of Object.keys(
+                    privileges.admin.routePrefixMap
+                )) {
                     /* eslint-disable no-await-in-loop */
-                    await privileges.admin.rescind([privileges.admin.routePrefixMap[route]], uid);
-                    let res = await makeRequest(`${nconf.get('url')}/api/admin/${route}foobar/derp`);
+                    await privileges.admin.rescind(
+                        [privileges.admin.routePrefixMap[route]],
+                        uid
+                    );
+                    let res = await makeRequest(
+                        `${nconf.get('url')}/api/admin/${route}foobar/derp`
+                    );
                     assert.strictEqual(res.statusCode, 403);
 
-                    await privileges.admin.give([privileges.admin.routePrefixMap[route]], uid);
-                    res = await makeRequest(`${nconf.get('url')}/api/admin/${route}foobar/derp`);
+                    await privileges.admin.give(
+                        [privileges.admin.routePrefixMap[route]],
+                        uid
+                    );
+                    res = await makeRequest(
+                        `${nconf.get('url')}/api/admin/${route}foobar/derp`
+                    );
                     assert.strictEqual(res.statusCode, 404);
 
-                    await privileges.admin.rescind([privileges.admin.routePrefixMap[route]], uid);
+                    await privileges.admin.rescind(
+                        [privileges.admin.routePrefixMap[route]],
+                        uid
+                    );
                 }
             });
         });
@@ -939,11 +991,22 @@ describe('Admin Controllers', () => {
         });
 
         it('should check if group has admin group privilege', async () => {
-            await groups.create({ name: 'some-special-group', private: 1, hidden: 1 });
-            await privileges.admin.give(['groups:admin:users', 'groups:admin:groups'], 'some-special-group');
-            const can = await privileges.admin.canGroup('admin:users', 'some-special-group');
+            await groups.create({
+                name: 'some-special-group',
+                private: 1,
+                hidden: 1,
+            });
+            await privileges.admin.give(
+                ['groups:admin:users', 'groups:admin:groups'],
+                'some-special-group'
+            );
+            const can = await privileges.admin.canGroup(
+                'admin:users',
+                'some-special-group'
+            );
             assert.strictEqual(can, true);
-            const privs = await privileges.admin.groupPrivileges('some-special-group');
+            const privs =
+                await privileges.admin.groupPrivileges('some-special-group');
             assert.deepStrictEqual(privs, {
                 'groups:admin:dashboard': false,
                 'groups:admin:categories': false,
@@ -958,8 +1021,14 @@ describe('Admin Controllers', () => {
 
         it('should not have admin:privileges', async () => {
             const res = await privileges.admin.list(regularUid);
-            assert.strictEqual(res.keys.users.includes('admin:privileges'), false);
-            assert.strictEqual(res.keys.groups.includes('admin:privileges'), false);
+            assert.strictEqual(
+                res.keys.users.includes('admin:privileges'),
+                false
+            );
+            assert.strictEqual(
+                res.keys.groups.includes('admin:privileges'),
+                false
+            );
         });
     });
 });

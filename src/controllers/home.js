@@ -8,12 +8,14 @@ const plugins = require('../plugins');
 const meta = require('../meta');
 const user = require('../user');
 
-
-
 // return type should be string
 function adminHomePageRoute() {
     // assert return type string
-    const output = ((meta.config.homePageRoute === 'custom' ? meta.config.homePageCustom : meta.config.homePageRoute) || 'tags').replace(/^\//, '');
+    const output = (
+        (meta.config.homePageRoute === 'custom'
+            ? meta.config.homePageCustom
+            : meta.config.homePageRoute) || 'tags'
+    ).replace(/^\//, '');
     assert(typeof output === 'string');
     return output;
 }
@@ -22,7 +24,10 @@ async function getUserHomeRoute(uid) {
     const settings = await user.getSettings(uid);
     let route = adminHomePageRoute();
 
-    if (settings.homePageRoute !== 'undefined' && settings.homePageRoute !== 'none') {
+    if (
+        settings.homePageRoute !== 'undefined' &&
+        settings.homePageRoute !== 'none'
+    ) {
         route = (settings.homePageRoute || route).replace(/^\/+/, '');
     }
 
