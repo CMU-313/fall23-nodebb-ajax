@@ -1,13 +1,13 @@
 # User Guide for Courses Features
 
-This user guide provides detailed instructions on how to create a new course with students added to it, as well as how to test them. 
+This user guide provides detailed instructions on how to create a new course with students added to it, as well as how to test them.
 
 ## Table of Contents
 
 1. **Introduction**
    - Overview of New Features
-   
 2. **How to Use the New Features**
+
    - Step-by-Step Instructions
 
 3. **Automated Tests**
@@ -31,9 +31,9 @@ The last new feature just appends 'instructor' or 'student' to account usernames
 
 ### Creating a New Course and Adding Students
 
-To create a new course in the system, follow these steps: 
+To create a new course in the system, follow these steps:
 
-1. Log in to your instructor account 
+1. Log in to your instructor account
 2. Navigate to homepage
 3. Click on "Create Course."
 4. Enter course name where indicated.
@@ -49,7 +49,7 @@ To see the courses that you are a member of, follow these steps:
 
 ### See What Role a Poster Is (Student or Instructor)
 
-To see what role a poster is, follow these steps: 
+To see what role a poster is, follow these steps:
 
 1. Navigate to post
 2. Look at the username of the poster; a suffix of '-student' indicates that they are a student while a suffix of '-instructor' indicates that they are an instructor

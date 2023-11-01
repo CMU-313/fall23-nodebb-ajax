@@ -1,19 +1,19 @@
-'use strict';
+"use strict";
 
-const async = require('async');
-const assert = require('assert');
-const nconf = require('nconf');
-const request = require('request');
+const async = require("async");
+const assert = require("assert");
+const nconf = require("nconf");
+const request = require("request");
 
-const db = require('./mocks/databasemock');
-const categories = require('../src/categories');
-const topics = require('../src/topics');
-const user = require('../src/user');
-const groups = require('../src/groups');
-const helpers = require('./helpers');
-const meta = require('../src/meta');
+const db = require("./mocks/databasemock");
+const categories = require("../src/categories");
+const topics = require("../src/topics");
+const user = require("../src/user");
+const groups = require("../src/groups");
+const helpers = require("./helpers");
+const meta = require("../src/meta");
 
-describe('Admin Controllers', () => {
+describe("Admin Controllers", () => {
     let tid;
     let cid;
     let pid;
@@ -25,56 +25,86 @@ describe('Admin Controllers', () => {
     let jar;
 
     before((done) => {
-        async.series({
-            category: function (next) {
-                categories.create({
-                    name: 'Test Category',
-                    description: 'Test category created by testing script',
-                }, next);
+        async.series(
+            {
+                category: function (next) {
+                    categories.create(
+                        {
+                            name: "Test Category",
+                            description:
+                                "Test category created by testing script",
+                        },
+                        next,
+                    );
+                },
+                adminUid: function (next) {
+                    user.create(
+                        { username: "admin", password: "barbar" },
+                        next,
+                    );
+                },
+                regularUid: function (next) {
+                    user.create(
+                        { username: "regular", password: "regularpwd" },
+                        next,
+                    );
+                },
+                regular2Uid: function (next) {
+                    user.create({ username: "regular2" }, next);
+                },
+                moderatorUid: function (next) {
+                    user.create(
+                        { username: "moderator", password: "modmod" },
+                        next,
+                    );
+                },
             },
-            adminUid: function (next) {
-                user.create({ username: 'admin', password: 'barbar' }, next);
-            },
-            regularUid: function (next) {
-                user.create({ username: 'regular', password: 'regularpwd' }, next);
-            },
-            regular2Uid: function (next) {
-                user.create({ username: 'regular2' }, next);
-            },
-            moderatorUid: function (next) {
-                user.create({ username: 'moderator', password: 'modmod' }, next);
-            },
-        }, async (err, results) => {
-            if (err) {
-                return done(err);
-            }
-            adminUid = results.adminUid;
-            regularUid = results.regularUid;
-            regular2Uid = results.regular2Uid;
-            moderatorUid = results.moderatorUid;
-            cid = results.category.cid;
+            async (err, results) => {
+                if (err) {
+                    return done(err);
+                }
+                adminUid = results.adminUid;
+                regularUid = results.regularUid;
+                regular2Uid = results.regular2Uid;
+                moderatorUid = results.moderatorUid;
+                cid = results.category.cid;
 
-            const adminPost = await topics.post({ uid: adminUid, title: 'test topic title', content: 'test topic content', cid: results.category.cid });
-            assert.ifError(err);
-            tid = adminPost.topicData.tid;
-            pid = adminPost.postData.pid;
+                const adminPost = await topics.post({
+                    uid: adminUid,
+                    title: "test topic title",
+                    content: "test topic content",
+                    cid: results.category.cid,
+                });
+                assert.ifError(err);
+                tid = adminPost.topicData.tid;
+                pid = adminPost.postData.pid;
 
-            const regularPost = await topics.post({ uid: regular2Uid, title: 'regular user\'s test topic title', content: 'test topic content', cid: results.category.cid });
-            regularPid = regularPost.postData.pid;
-            done();
-        });
+                const regularPost = await topics.post({
+                    uid: regular2Uid,
+                    title: "regular user's test topic title",
+                    content: "test topic content",
+                    cid: results.category.cid,
+                });
+                regularPid = regularPost.postData.pid;
+                done();
+            },
+        );
     });
 
-    it('should 403 if user is not admin', (done) => {
-        helpers.loginUser('admin', 'barbar', (err, data) => {
+    it("should 403 if user is not admin", (done) => {
+        helpers.loginUser("admin", "barbar", (err, data) => {
             assert.ifError(err);
             jar = data.jar;
-            request(`${nconf.get('url')}/admin`, { jar: jar }, (err, res, body) => {
-                assert.ifError(err);
-                assert.equal(res.statusCode, 403);
-                assert(body);
-                done();
-            });
+            request(
+                `${nconf.get("url")}/admin`,
+                { jar: jar },
+                (err, res, body) => {
+                    assert.ifError(err);
+                    assert.equal(res.statusCode, 403);
+                    assert(body);
+                    done();
+                },
+            );
         });
     });
 
@@ -818,13 +848,16 @@ describe('Admin Controllers', () => {
         });
     });*/
 
-    describe('admin page privileges', () => {
+    describe("admin page privileges", () => {
         let userJar;
         let uid;
-        const privileges = require('../src/privileges');
+        const privileges = require("../src/privileges");
         before(async () => {
-            uid = await user.create({ username: 'regularjoe', password: 'barbar' });
-            userJar = (await helpers.loginUser('regularjoe', 'barbar')).jar;
+            uid = await user.create({
+                username: "regularjoe",
+                password: "barbar",
+            });
+            userJar = (await helpers.loginUser("regularjoe", "barbar")).jar;
         });
 
         /* describe('routeMap parsing', () => {
@@ -877,89 +910,125 @@ describe('Admin Controllers', () => {
             });
         }); */
 
-        describe('routePrefixMap parsing', () => {
-            it('should allow normal user access to admin pages', async () => {
+        describe("routePrefixMap parsing", () => {
+            it("should allow normal user access to admin pages", async () => {
                 // this.timeout(50000);
                 function makeRequest(url) {
                     return new Promise((resolve, reject) => {
-                        request(url, { jar: userJar, json: true }, (err, res, body) => {
-                            if (err) reject(err);
-                            else resolve(res);
-                        });
+                        request(
+                            url,
+                            { jar: userJar, json: true },
+                            (err, res, body) => {
+                                if (err) reject(err);
+                                else resolve(res);
+                            },
+                        );
                     });
                 }
-                for (const route of Object.keys(privileges.admin.routePrefixMap)) {
+                for (const route of Object.keys(
+                    privileges.admin.routePrefixMap,
+                )) {
                     /* eslint-disable no-await-in-loop */
-                    await privileges.admin.rescind([privileges.admin.routePrefixMap[route]], uid);
-                    let res = await makeRequest(`${nconf.get('url')}/api/admin/${route}foobar/derp`);
+                    await privileges.admin.rescind(
+                        [privileges.admin.routePrefixMap[route]],
+                        uid,
+                    );
+                    let res = await makeRequest(
+                        `${nconf.get("url")}/api/admin/${route}foobar/derp`,
+                    );
                     assert.strictEqual(res.statusCode, 403);
 
-                    await privileges.admin.give([privileges.admin.routePrefixMap[route]], uid);
-                    res = await makeRequest(`${nconf.get('url')}/api/admin/${route}foobar/derp`);
+                    await privileges.admin.give(
+                        [privileges.admin.routePrefixMap[route]],
+                        uid,
+                    );
+                    res = await makeRequest(
+                        `${nconf.get("url")}/api/admin/${route}foobar/derp`,
+                    );
                     assert.strictEqual(res.statusCode, 404);
 
-                    await privileges.admin.rescind([privileges.admin.routePrefixMap[route]], uid);
+                    await privileges.admin.rescind(
+                        [privileges.admin.routePrefixMap[route]],
+                        uid,
+                    );
                 }
             });
         });
 
-        it('should list all admin privileges', async () => {
+        it("should list all admin privileges", async () => {
             const privs = await privileges.admin.getPrivilegeList();
             assert.deepStrictEqual(privs, [
-                'admin:dashboard',
-                'admin:categories',
-                'admin:privileges',
-                'admin:admins-mods',
-                'admin:users',
-                'admin:groups',
-                'admin:tags',
-                'admin:settings',
-                'groups:admin:dashboard',
-                'groups:admin:categories',
-                'groups:admin:privileges',
-                'groups:admin:admins-mods',
-                'groups:admin:users',
-                'groups:admin:groups',
-                'groups:admin:tags',
-                'groups:admin:settings',
+                "admin:dashboard",
+                "admin:categories",
+                "admin:privileges",
+                "admin:admins-mods",
+                "admin:users",
+                "admin:groups",
+                "admin:tags",
+                "admin:settings",
+                "groups:admin:dashboard",
+                "groups:admin:categories",
+                "groups:admin:privileges",
+                "groups:admin:admins-mods",
+                "groups:admin:users",
+                "groups:admin:groups",
+                "groups:admin:tags",
+                "groups:admin:settings",
             ]);
         });
-        it('should list user admin privileges', async () => {
+        it("should list user admin privileges", async () => {
             const privs = await privileges.admin.userPrivileges(adminUid);
             assert.deepStrictEqual(privs, {
-                'admin:dashboard': false,
-                'admin:categories': false,
-                'admin:privileges': false,
-                'admin:admins-mods': false,
-                'admin:users': false,
-                'admin:groups': false,
-                'admin:tags': false,
-                'admin:settings': false,
+                "admin:dashboard": false,
+                "admin:categories": false,
+                "admin:privileges": false,
+                "admin:admins-mods": false,
+                "admin:users": false,
+                "admin:groups": false,
+                "admin:tags": false,
+                "admin:settings": false,
             });
         });
 
-        it('should check if group has admin group privilege', async () => {
-            await groups.create({ name: 'some-special-group', private: 1, hidden: 1 });
-            await privileges.admin.give(['groups:admin:users', 'groups:admin:groups'], 'some-special-group');
-            const can = await privileges.admin.canGroup('admin:users', 'some-special-group');
+        it("should check if group has admin group privilege", async () => {
+            await groups.create({
+                name: "some-special-group",
+                private: 1,
+                hidden: 1,
+            });
+            await privileges.admin.give(
+                ["groups:admin:users", "groups:admin:groups"],
+                "some-special-group",
+            );
+            const can = await privileges.admin.canGroup(
+                "admin:users",
+                "some-special-group",
+            );
             assert.strictEqual(can, true);
-            const privs = await privileges.admin.groupPrivileges('some-special-group');
+            const privs =
+                await privileges.admin.groupPrivileges("some-special-group");
             assert.deepStrictEqual(privs, {
-                'groups:admin:dashboard': false,
-                'groups:admin:categories': false,
-                'groups:admin:privileges': false,
-                'groups:admin:admins-mods': false,
-                'groups:admin:users': true,
-                'groups:admin:groups': true,
-                'groups:admin:tags': false,
-                'groups:admin:settings': false,
+                "groups:admin:dashboard": false,
+                "groups:admin:categories": false,
+                "groups:admin:privileges": false,
+                "groups:admin:admins-mods": false,
+                "groups:admin:users": true,
+                "groups:admin:groups": true,
+                "groups:admin:tags": false,
+                "groups:admin:settings": false,
             });
         });
 
-        it('should not have admin:privileges', async () => {
+        it("should not have admin:privileges", async () => {
             const res = await privileges.admin.list(regularUid);
-            assert.strictEqual(res.keys.users.includes('admin:privileges'), false);
-            assert.strictEqual(res.keys.groups.includes('admin:privileges'), false);
+            assert.strictEqual(
+                res.keys.users.includes("admin:privileges"),
+                false,
+            );
+            assert.strictEqual(
+                res.keys.groups.includes("admin:privileges"),
+                false,
+            );
         });
     });
 });
