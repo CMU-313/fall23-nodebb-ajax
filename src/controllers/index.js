@@ -309,7 +309,8 @@ Controllers.manifest = async function (req, res) {
         display: 'standalone',
         orientation: 'portrait',
         theme_color: meta.config.themeColor || '#ffffff',
-        background_color: meta.config.backgroundColor || '#ffffff', icons: [],
+        background_color: meta.config.backgroundColor || '#ffffff',
+        icons: [],
     };
 
     if (meta.config['brand:touchIcon']) {
