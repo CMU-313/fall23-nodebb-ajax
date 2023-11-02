@@ -16,7 +16,10 @@ describe('Middlewares', () => {
         let adminUid;
 
         before(async () => {
-            adminUid = await user.create({ username: 'admin', password: '123456' });
+            adminUid = await user.create({
+                username: 'admin',
+                password: '123456',
+            });
             await groups.join('administrators', adminUid);
         });
 
@@ -41,13 +44,19 @@ describe('Middlewares', () => {
 
         it('should expose privileges in res.locals.privileges and isSelf=true', (done) => {
             const middleware = require('../src/middleware');
-            const reqMock = { user: { uid: adminUid }, params: { uid: adminUid } };
+            const reqMock = {
+                user: { uid: adminUid },
+                params: { uid: adminUid },
+            };
             const resMock = { locals: {} };
             middleware.exposePrivileges(reqMock, resMock, () => {
                 assert(resMock.locals.privileges);
                 assert.strictEqual(resMock.locals.privileges.isAdmin, true);
                 assert.strictEqual(resMock.locals.privileges.isGmod, false);
-                assert.strictEqual(resMock.locals.privileges.isPrivileged, true);
+                assert.strictEqual(
+                    resMock.locals.privileges.isPrivileged,
+                    true
+                );
                 assert.strictEqual(resMock.locals.privileges.isSelf, true);
                 done();
             });
@@ -61,7 +70,10 @@ describe('Middlewares', () => {
                 assert(resMock.locals.privileges);
                 assert.strictEqual(resMock.locals.privileges.isAdmin, false);
                 assert.strictEqual(resMock.locals.privileges.isGmod, false);
-                assert.strictEqual(resMock.locals.privileges.isPrivileged, false);
+                assert.strictEqual(
+                    resMock.locals.privileges.isPrivileged,
+                    false
+                );
                 assert.strictEqual(resMock.locals.privileges.isSelf, false);
                 done();
             });
@@ -144,7 +156,7 @@ describe('Middlewares', () => {
 
             assert.strictEqual(res.statusCode, 200);
             assert(!Object.keys(res.headers).includes('cache-control'));
-        });*/
+        }); */
 
     /* it('should be absent on api routes, for guests', async () => {
             const res = await request(`${nconf.get('url')}/api`, {
@@ -193,4 +205,3 @@ describe('Middlewares', () => {
         });
     }); */
 });
-
